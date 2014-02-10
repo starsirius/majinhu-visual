@@ -1,1 +1,83 @@
 @imageFolder: "../img";
+@fontFolder:  "../fonts";
+@font-family-header: Azuki, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-paragraph: Cardo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@font-face {
+    font-family: 'Azuki';
+    src: url('@{fontFolder}/azuki-webfont.eot');
+    src: url('@{fontFolder}/azuki-webfont.eot?#iefix') format('embedded-opentype'),
+         url('@{fontFolder}/azuki-webfont.woff') format('woff'),
+         url('@{fontFolder}/azuki-webfont.ttf') format('truetype'),
+         url('@{fontFolder}/azuki-webfont.svg#azukiregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cardo';
+    src: url('@{fontFolder}/cardo104s-webfont.eot');
+    src: url('@{fontFolder}/cardo104s-webfont.eot?#iefix') format('embedded-opentype'),
+         url('@{fontFolder}/cardo104s-webfont.woff') format('woff'),
+         url('@{fontFolder}/cardo104s-webfont.ttf') format('truetype'),
+         url('@{fontFolder}/cardo104s-webfont.svg#cardoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cardo';
+    src: url('@{fontFolder}/cardob101-webfont.eot');
+    src: url('@{fontFolder}/cardob101-webfont.eot?#iefix') format('embedded-opentype'),
+         url('@{fontFolder}/cardob101-webfont.woff') format('woff'),
+         url('@{fontFolder}/cardob101-webfont.ttf') format('truetype'),
+         url('@{fontFolder}/cardob101-webfont.svg#cardobold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cardo';
+    src: url('@{fontFolder}/cardoi99-webfont.eot');
+    src: url('@{fontFolder}/cardoi99-webfont.eot?#iefix') format('embedded-opentype'),
+         url('@{fontFolder}/cardoi99-webfont.woff') format('woff'),
+         url('@{fontFolder}/cardoi99-webfont.ttf') format('truetype'),
+         url('@{fontFolder}/cardoi99-webfont.svg#CardoItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+.navbar { margin-top: 100px; }
+
+.navbar-nav {
+  .eng { font-family: @font-family-header; }
+}
+
+.navbar-brand {
+  background: url("@{imageFolder}/brand.png") no-repeat;
+  height: @navbar-height;
+  margin-right: 20px;
+}
+
+.navbar-stamp{
+  background-position: 0 0;
+  width: 51px;
+}
+
+.navbar-logo{
+  background-position: -53px 0;
+  width: 147px;
+}
+
+.navbar-subtitle{
+  background-position: -201px 0;
+  width: 230px;
+}
+
+.navbar-wide {
+  .container-fluid, 
+  .navbar-collapse { padding-right: 0; }
+}
+
+.eng { font-family: @font-family-paragraph; }  
+.cht { font-family: @font-family-paragraph; }  
