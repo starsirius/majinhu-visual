@@ -79,5 +79,34 @@
   .navbar-collapse { padding-right: 0; }
 }
 
+.faux-underline-hover {
+  & {
+    display: inline;
+    position: relative;
+    text-decoration: none;
+    &:hover, &:focus {
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        display: inline-block;
+        height: 1em;
+        width: 100%;
+        margin-top: 0.4em;
+        border-bottom: 1px solid #777;
+        color: rgb(80, 80, 80);
+      }
+    }
+  }
+}
+
+.footer {
+  font-size: @font-size-base * 0.8;
+  color: #999;
+  text-align: right;
+  margin-top: 50px;
+  padding: 20px 0;
+}
+
 .eng { font-family: @font-family-paragraph; }  
 .cht { font-family: @font-family-paragraph; }  
