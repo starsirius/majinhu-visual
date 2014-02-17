@@ -1,6 +1,29 @@
 #artworks {
-  height: 100%;
-  .container {
-    height: 100%;
+}
+
+// BlackInkGallery styles
+.black-ink-gallery {
+  overflow-x : scroll;
+  overflow-y : hidden;
+  direction  : rtl;
+  text-align : right;
+  white-space: nowrap;
+
+  .big-figure-column {
+    white-space: normal;
+    display: inline;
+    &, & img {
+      height: 100%;
+    }
   }
+
+  .big-figure {
+    display: inline-block;
+        -ms-writing-mode: tb-rl;
+    -webkit-writing-mode: vertical-rl;
+       -moz-writing-mode: vertical-rl;
+        -ms-writing-mode: vertical-rl;
+            writing-mode: vertical-rl;
+  }
+
 }
