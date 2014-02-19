@@ -1,0 +1,40 @@
+#artworks {
+}
+
+// BlackInkGallery styles
+.black-ink-gallery {
+  overflow-x : scroll;
+  overflow-y : hidden;
+  direction  : rtl;
+  text-align : right;
+  height: 500px;
+
+  .big-inner {
+    height: 100%;
+    white-space: nowrap;
+  }
+
+  .big-figure-column {
+    white-space: normal;
+    display: inline-block;
+    &, & img {
+      height: 100%;
+    }
+  }
+
+  .big-figure {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .big-figurecaption {
+    display: inline-block;
+    vertical-align: bottom;
+        -ms-writing-mode: tb-rl;
+    -webkit-writing-mode: vertical-rl;
+       -moz-writing-mode: vertical-rl;
+        -ms-writing-mode: vertical-rl;
+            writing-mode: vertical-rl;
+  }
+
+}
