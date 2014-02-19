@@ -7,11 +7,16 @@
   overflow-y : hidden;
   direction  : rtl;
   text-align : right;
-  white-space: nowrap;
+  height: 500px;
+
+  .big-inner {
+    height: 100%;
+    white-space: nowrap;
+  }
 
   .big-figure-column {
     white-space: normal;
-    display: inline;
+    display: inline-block;
     &, & img {
       height: 100%;
     }
@@ -19,6 +24,12 @@
 
   .big-figure {
     display: inline-block;
+    height: 100%;
+  }
+
+  .big-figurecaption {
+    display: inline-block;
+    vertical-align: bottom;
         -ms-writing-mode: tb-rl;
     -webkit-writing-mode: vertical-rl;
        -moz-writing-mode: vertical-rl;
