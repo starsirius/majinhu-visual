@@ -1,13 +1,64 @@
+.vertical-rl-writing-mode() {
+      -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+     -moz-writing-mode: vertical-rl;
+      -ms-writing-mode: vertical-rl;
+          writing-mode: vertical-rl;
+}
+
 #artworks {
+  height: 100%;
+  background-color: #535d5f;
+
+  h1 { font-size: 60px; }
+
+  .vertical {
+    background-color: #ece8e2;
+    height: 90%;
+    width: 100%;
+    padding: 3.5% 0;
+    padding-right: 100px;
+    margin: 1.5% 0;
+    .vertical-rl-writing-mode();
+
+    .col-lg-11 {
+      height: 100%;
+    }
+
+    .navbar {
+      margin-top: 0;
+    }
+    .navbar-header {
+      padding: 15px;
+    }
+    .navbar-stamp {
+      margin: 0;
+    }
+    .navbar-nav {
+      padding: 0;
+    }
+
+    .nav-artworks-filter {
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+  }
 }
 
 // BlackInkGallery styles
 .black-ink-gallery {
+  -webkit-writing-mode: initial;
   overflow-x : scroll;
   overflow-y : hidden;
   direction  : rtl;
   text-align : right;
-  height: 500px;
+  height: 100%;
 
   .big-inner {
     height: 100%;
@@ -30,11 +81,9 @@
   .big-figurecaption {
     display: inline-block;
     vertical-align: bottom;
-        -ms-writing-mode: tb-rl;
-    -webkit-writing-mode: vertical-rl;
-       -moz-writing-mode: vertical-rl;
-        -ms-writing-mode: vertical-rl;
-            writing-mode: vertical-rl;
+    font-size: 12px;
+    line-height: 18px;
+    width: 36px;
+    .vertical-rl-writing-mode();
   }
-
 }
