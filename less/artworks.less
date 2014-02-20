@@ -8,17 +8,17 @@
 
 #artworks {
   height: 100%;
-  background-color: #535d5f;
 
   h1 { font-size: 60px; }
 
   .vertical {
+    overflow-x: scroll;
     background-color: #ece8e2;
-    height: 90%;
+    height: 100%;
     width: 100%;
-    padding: 3.5% 0;
-    padding-right: 100px;
-    margin: 1.5% 0;
+    padding: 70px 100px 70px 0;
+    border-top: 30px solid #535d5f;
+    border-bottom: 30px solid #535d5f;
     .vertical-rl-writing-mode();
 
     .col-lg-11 {
@@ -53,37 +53,18 @@
 
 // BlackInkGallery styles
 .black-ink-gallery {
-  -webkit-writing-mode: initial;
-  overflow-x : scroll;
-  overflow-y : hidden;
-  direction  : rtl;
   text-align : right;
-  height: 100%;
-
-  .big-inner {
-    height: 100%;
-    white-space: nowrap;
-  }
-
-  .big-figure-column {
-    white-space: normal;
-    display: inline-block;
-    &, & img {
-      height: 100%;
-    }
-  }
-
+  
+  &,
+  .big-inner,
+  .big-figure-column, 
+  .big-figure-column img,
   .big-figure {
-    display: inline-block;
     height: 100%;
   }
 
   .big-figurecaption {
-    display: inline-block;
-    vertical-align: bottom;
     font-size: 12px;
     line-height: 18px;
-    width: 36px;
-    .vertical-rl-writing-mode();
   }
 }
