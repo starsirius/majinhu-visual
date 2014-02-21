@@ -11,7 +11,11 @@
 
   h1 { font-size: 60px; }
 
-  .vertical {
+  .scroll-button {
+    display: none;
+  }
+
+  .vertical-rl {
     overflow-x: scroll;
     background-color: #ece8e2;
     height: 100%;
@@ -79,7 +83,25 @@
 }
 
 // BlackInkGallery styles
-.black-ink-gallery {
+.black-ink-gallery.vertical {
+  .big-inner { font-size: 0; }
+
+  .big-figure-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 14.16%;
+    margin-left: 3%;
+    &:nth-child(6n+1) { margin-left: 0; }
+  }
+
+  .big-figure {
+    display: inline-block;
+    width: 100%;
+    img { width: 100%; }
+  }
+}
+
+.black-ink-gallery.horizontal {
   text-align : right;
   
   &,

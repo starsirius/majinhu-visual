@@ -20,7 +20,7 @@
   <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
   <![endif]-->
 
-  <div class="container vertical">
+  <div class="container">
 
     <!-- Navbar -->
     <div class="row">
@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div id="gallery" class="black-ink-gallery">
+    <div id="gallery" class="black-ink-gallery vertical">
       <div class="big-inner">
         <div class="big-figure-column">
           <figure class="big-figure">
@@ -232,6 +232,10 @@
   <script src="js/black-ink-gallery.js"></script>
   <script>
     //$('#gallery').blackInkGallery();
+    if ($('body')[0].style["-webkit-writing-mode"] != undefined) {
+      //$('#artworks > .container').addClass('vertical-rl');
+      //$('#gallery').removeClass('vertical').addClass('horizontal');
+    }
   </script>
 
   <script src="js/main.js"></script>
