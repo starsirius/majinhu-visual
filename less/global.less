@@ -1,7 +1,29 @@
 @imageFolder: "../img";
 @fontFolder:  "../fonts";
-@font-family-header: Azuki, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-header: "Black Ink", Azuki, "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-paragraph: Cardo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@font-face {
+  font-family: 'Black Ink';
+  src: local(Azuki),
+       local("Helvetica Neue");
+}
+
+@font-face {
+  font-family: 'Black Ink';
+  unicode-range: U+00-024F;
+  src: local(Azuki),
+       local("Helvetica Neue");
+}
+
+@font-face {
+  font-family: 'Black Ink';
+  unicode-range: U+4E00-9FFF;
+  src: local(BiauKai),
+       local("LiSong Pro"),
+       local("LiHei Pro"),
+       local("微軟正黑體");
+}
 
 @font-face {
     font-family: 'Azuki';
@@ -49,8 +71,12 @@
 
 .navbar { margin-top: 100px; }
 
+h1, h2 {
+  font-family: @font-family-header;
+}
+
 .navbar-nav {
-  .eng { font-family: @font-family-header; }
+  font-family: @font-family-header;
 }
 
 .navbar-brand {
@@ -79,6 +105,7 @@
   .navbar-collapse { padding-right: 0; }
 }
 
+/*
 .faux-underline-hover {
   & {
     display: inline;
@@ -99,6 +126,7 @@
     }
   }
 }
+*/
 
 .footer {
   font-size: @font-size-base * 0.8;
@@ -107,6 +135,3 @@
   margin-top: 50px;
   padding: 20px 0;
 }
-
-.eng { font-family: @font-family-paragraph; }  
-.cht { font-family: @font-family-paragraph; }  
