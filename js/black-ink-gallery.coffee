@@ -36,11 +36,9 @@
     $figures = $(figures)
 
     if $('body')[0].style["-webkit-writing-mode"]?
-      @$el.removeClass('vertical').addClass('horizontal')
       @horizontalScroll $figures
     else
-      @$el.removeClass('horizontal').addClass('vertical')
-      @verticalScroll $figures, numberOfColumns: 5
+      @verticalScroll $figures, numberOfColumns: 6
 
   BlackInkGallery.prototype.verticalScroll = ($figures, options) ->
 
@@ -58,12 +56,18 @@
       for v, i in columnHeights
         if v < shortest
           shortestIndex = i; shortest = v
-      $columns[shortestIndex].append @makeFigure $(figure)
-      columnHeights[shortestIndex] += $(figure).find("img").first().data "height"
+      $columns[shortestIndex].append @makeFigure $(figure), captionFirst: false
 
-    @$el.html $inner.append $columns
+      $image = $(figure).find("img").first()
+      w = $image.data "width"; h = $image.data "height"
+      # We don't know the image heights before we insert them. Simulate it.
+      columnHeights[shortestIndex] += 1 / w * h
 
-  BlackInkGallery.prototype.makeFigure = ($original) ->
+    @$el.addClass("black-ink-gallery vertical").html $inner.append $columns
+
+  BlackInkGallery.prototype.makeFigure = ($original, options) ->
+
+    captionFirst = options.captionFirst
 
     $figure  = $('<div class="big-figure"></div>')
     $caption = $('<figurecaption class="big-figurecaption"></figurecaption>')
@@ -79,10 +83,8 @@
       for className, text of captions
         $caption.append '<p class="' + className + '">' + text + '</p>'
 
-    $figure.append [$caption, $original]
-
-  BlackInkGallery.prototype.makeColumns = ($figures) ->
-
+    $content = if captionFirst then [$caption, $original] else [$original, $caption]
+    $figure.append $content
 
   BlackInkGallery.prototype.horizontalScroll = ($figures, options) ->
 
@@ -93,19 +95,18 @@
     hwRatioThreshold  = 1.5
     figureGroup       = []
 
-    $figures.each (index) ->
+    $figures.each (index, figure) ->
 
-      $image = $(@).find("img").first()
+      $image = $(figure).find("img").first()
       w = $image.data "width"; h = $image.data "height"
       if h > minHeight and h / w > hwRatioThreshold
-        figureGroup.push $(@)
+        figureGroup.push $(figure)
       else
         # TODO
-        figureGroup.push $(@)
+        figureGroup.push $(figure)
 
     # set up container
-    windowHeight = $(window).height()
-    $el.addClass("black-ink-gallery horizontal").css "height", windowHeight
+    $el.addClass("black-ink-gallery horizontal").css "height", $el.parent().height()
     $inner = $('<div class="big-inner"></div>')
 
     for $fg in figureGroup

@@ -9,7 +9,14 @@
 #artworks {
   height: 100%;
 
-  h1 { font-size: 60px; }
+  h1 {
+    font-size: 60px;
+    margin-top: 0;
+  }
+
+  .nav-artworks-filter {
+    margin-bottom: 50px;
+  }
 
   .scroll-button {
     display: none;
@@ -33,7 +40,7 @@
       margin-top: 0;
     }
     .navbar-header {
-      padding: 15px;
+      padding: 0 15px 15px 15px;
     }
     .navbar-stamp {
       margin: 0;
@@ -85,8 +92,6 @@
 
 // BlackInkGallery styles
 .black-ink-gallery.vertical {
-  .big-inner { font-size: 0; }
-
   .big-figure-column {
     display: inline-block;
     vertical-align: top;
@@ -98,7 +103,15 @@
   .big-figure {
     display: inline-block;
     width: 100%;
+    margin-bottom: 40px;
     img { width: 100%; }
+  }
+
+  .big-figurecaption {
+    display: inline-block;
+    font-size: 12px;
+    margin-top: 10px;
+    p { margin-bottom: 5px }
   }
 }
 
