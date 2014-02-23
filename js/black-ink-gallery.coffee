@@ -6,7 +6,7 @@
     @$el = $(el)
     @options = options
 
-    @$el.on "big.preprocessed", @processFigures
+    @$el.on "big.preprocessed", $.proxy(@processFigures, @)
     return
     
   # Make sure we have data needed, e.g. image dimensions
@@ -33,14 +33,67 @@
 
   BlackInkGallery.prototype.processFigures = (event, figures...) ->
 
-    $el = $(@)
+    $figures = $(figures)
+
+    if $('body')[0].style["-webkit-writing-mode"]?
+      @$el.removeClass('vertical').addClass('horizontal')
+      @horizontalScroll $figures
+    else
+      @$el.removeClass('horizontal').addClass('vertical')
+      @verticalScroll $figures, numberOfColumns: 5
+
+  BlackInkGallery.prototype.verticalScroll = ($figures, options) ->
+
+    { numberOfColumns } = options
+    $inner = $('<div class="big-inner"></div>')
+
+    # initialize
+    $columns = []; columnHeights = []
+    for i in [0..numberOfColumns-1]
+      $columns[i] = $('<div class="big-figure-column"></div>')
+      columnHeights[i] = 0
+
+    $figures.each (index, figure) =>
+      shortestIndex = 0; shortest = columnHeights[shortestIndex]
+      for v, i in columnHeights
+        if v < shortest
+          shortestIndex = i; shortest = v
+      $columns[shortestIndex].append @makeFigure $(figure)
+      columnHeights[shortestIndex] += $(figure).find("img").first().data "height"
+
+    @$el.html $inner.append $columns
+
+  BlackInkGallery.prototype.makeFigure = ($original) ->
+
+    $figure  = $('<div class="big-figure"></div>')
+    $caption = $('<figurecaption class="big-figurecaption"></figurecaption>')
+    $image   = $original.find("img").first()
+
+    if (caption = $image.attr("data-caption"))?
+      try
+        # if caption is a json string
+        captions = JSON.parse caption
+      catch e
+        captions = caption: caption
+
+      for className, text of captions
+        $caption.append '<p class="' + className + '">' + text + '</p>'
+
+    $figure.append [$caption, $original]
+
+  BlackInkGallery.prototype.makeColumns = ($figures) ->
+
+
+  BlackInkGallery.prototype.horizontalScroll = ($figures, options) ->
+
+    $el = @$el
 
     # defaults
     minHeight         = 500
     hwRatioThreshold  = 1.5
     figureGroup       = []
 
-    ($figures = $(figures)).each (index) ->
+    $figures.each (index) ->
 
       $image = $(@).find("img").first()
       w = $image.data "width"; h = $image.data "height"
@@ -71,9 +124,6 @@
       $inner.append $column.append $figure.append [$caption, $fg]
 
     $el.html $inner
-
-  BlackInkGallery.prototype.close = (e) ->
-    # example function
 
   $.fn.blackInkGallery = () ->
     return @each () -> (new BlackInkGallery(@)).preprocessFigures()
