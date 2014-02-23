@@ -1,20 +1,20 @@
 (($) ->
   'use strict'
 
-  BlackInkGallery = (el) ->
-    # constructor function
-    
-    # defaults
-    minHeight = 500
-    hwRatioThreshold = 1.5
-    
-    # set up container
-    windowHeight = $(window).height()
-    $(el).addClass("black-ink-gallery").height windowHeight + "px"
-    $(el).wrapInner '<div class="big-inner"></div>'
+  # constructor function
+  BlackInkGallery = (el, options) ->
+    @$el = $(el)
+    @options = options
 
-    numberOfImages = ($figures = $(el).find "figure").length
-    numberOfImagesLoaded = 0
+    @$el.on "big.preprocessed", $.proxy(@processFigures, @)
+    return
+    
+  # Make sure we have data needed, e.g. image dimensions
+  BlackInkGallery.prototype.preprocessFigures = () ->
+
+    $el = @$el
+    numberOfFigures = ($figures = $el.children()).length
+    numberOfFiguresLoaded = 0
 
     # set up each image's width and height
     $figures.each (index) ->
@@ -26,29 +26,102 @@
       $(new Image()).load( () ->
         $image.data "width", @width
         $image.data "height", @height
-        processImages() if ++numberOfImagesLoaded is numberOfImages
+
+        # NOTE The second parameters of `trigger()` is an array of arguments.
+        $el.trigger("big.preprocessed", $figures) if ++numberOfFiguresLoaded is numberOfFigures
       ).attr("src", $image.attr("src"))
 
-    processImages = () ->
+  BlackInkGallery.prototype.processFigures = (event, figures...) ->
 
-      figureGroup = [] # a figureGroup will occupy a figure column
-      bigColumn = '<div class="big-figure-column"></div>'
+    $figures = $(figures)
 
-      $figures.each (index) ->
-        #$(@).find("figurecaption").addClass "big-figurecaption"
+    if $('body')[0].style["-webkit-writing-mode"]?
+      @horizontalScroll $figures
+    else
+      @verticalScroll $figures, numberOfColumns: 6
 
-        $image = $(@).find("img").first()
-        w = $image.data "width"; h = $image.data "height"
+  BlackInkGallery.prototype.verticalScroll = ($figures, options) ->
 
-        #$(@).addClass("big-figure").wrap bigColumn
-        $(@).addClass("big-figure")
+    { numberOfColumns } = options
+    $inner = $('<div class="big-inner"></div>')
 
-  BlackInkGallery.prototype.close = (e) ->
-    # example function
+    # initialize
+    $columns = []; columnHeights = []
+    for i in [0..numberOfColumns-1]
+      $columns[i] = $('<div class="big-figure-column"></div>')
+      columnHeights[i] = 0
+
+    $figures.each (index, figure) =>
+      shortestIndex = 0; shortest = columnHeights[shortestIndex]
+      for v, i in columnHeights
+        if v < shortest
+          shortestIndex = i; shortest = v
+      $columns[shortestIndex].append @makeFigure $(figure), captionFirst: false
+
+      $image = $(figure).find("img").first()
+      w = $image.data "width"; h = $image.data "height"
+      # We don't know the image heights before we insert them. Simulate it.
+      columnHeights[shortestIndex] += 1 / w * h
+
+    @$el.addClass("black-ink-gallery vertical").html $inner.append $columns
+
+  BlackInkGallery.prototype.makeFigure = ($original, options={}) ->
+
+    captionFirst = options.captionFirst
+
+    $figure  = $('<div class="big-figure"></div>')
+    $caption = $('<figurecaption class="big-figurecaption"></figurecaption>')
+    $image   = $original.find("img").first()
+
+    if (caption = $image.attr("data-caption"))?
+      try
+        # if caption is a json string
+        captions = JSON.parse caption
+      catch e
+        captions = caption: caption
+
+      for className, text of captions
+        $caption.append '<p class="' + className + '">' + text + '</p>'
+
+    $content = if captionFirst then [$caption, $original] else [$original, $caption]
+    $figure.append $content
+
+  BlackInkGallery.prototype.horizontalScroll = ($figures, options) ->
+
+    $el = @$el
+
+    # defaults
+    minHeight         = 500
+    hwRatioThreshold  = 1.5
+    figureGroup       = []
+
+    $figures.each (index, figure) ->
+
+      $image = $(figure).find("img").first()
+      w = $image.data "width"; h = $image.data "height"
+      if h > minHeight and h / w > hwRatioThreshold
+        figureGroup.push $(figure)
+      else
+        # TODO
+        figureGroup.push $(figure)
+
+    # set up container
+    $el.addClass("black-ink-gallery horizontal").css "height", $el.parent().height()
+    $inner = $('<div class="big-inner"></div>')
+
+    for $fg in figureGroup
+      $column = $('<div class="big-figure-column"></div>')
+      $inner.append $column.append @makeFigure $fg, captionFirst: true
+
+    $el.html $inner
+    @postCreateGallery()
+
+  BlackInkGallery.prototype.postCreateGallery = () ->
+    $figures = @$el.find('.big-figure')
+    $figures.each (index, figure) -> window.getComputedStyle(figure).opacity
+    $figures.add(@$el.find('img')).css "opacity", 1
 
   $.fn.blackInkGallery = () ->
-    return @each () -> new BlackInkGallery(@)
-
-  $.fn.blackInkGallery.Constructor = BlackInkGallery
+    return @each () -> (new BlackInkGallery(@)).preprocessFigures()
 
 ) jQuery
