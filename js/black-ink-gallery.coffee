@@ -64,6 +64,7 @@
       columnHeights[shortestIndex] += 1 / w * h
 
     @$el.addClass("black-ink-gallery vertical").html $inner.append $columns
+    @postCreateGallery()
 
   BlackInkGallery.prototype.makeFigure = ($original, options={}) ->
 

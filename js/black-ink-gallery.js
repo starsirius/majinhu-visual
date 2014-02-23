@@ -68,7 +68,8 @@ var __slice = [].slice;
       h = $image.data("height");
       return columnHeights[shortestIndex] += 1 / w * h;
     });
-    return this.$el.addClass("black-ink-gallery vertical").html($inner.append($columns));
+    this.$el.addClass("black-ink-gallery vertical").html($inner.append($columns));
+    return this.postCreateGallery();
   };
   BlackInkGallery.prototype.makeFigure = function($original, options) {
     var $caption, $content, $figure, $image, caption, captionFirst, captions, className, e, text;
