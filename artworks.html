@@ -56,8 +56,8 @@
           </ul>
         </nav>
         <div class="scroll-button">
-          <a href="#">&lt;</a>
-          <a href="#">&gt;</a>
+          <a href="#" class="scroll-button-left">&lt;</a>
+          <a href="#" class="scroll-button-right">&gt;</a>
         </div>
       </div>
     </div>
@@ -116,6 +116,25 @@
     if ($('body')[0].style["-webkit-writing-mode"] != undefined) {
       $('#artworks > .container').addClass('vertical-rl');
     }
+
+    // If we display the scroll button
+    $('.scroll-button-left, .scroll-button-right').on("mouseover", function(e) {
+      var interval = 10, velocity = 8, _this = this;
+
+      var intervalId = setInterval(function() {
+        left = $('.vertical-rl').scrollLeft();
+
+        if ($(_this).hasClass("scroll-button-left")) {
+          $('.vertical-rl').scrollLeft(left - velocity);
+        }
+        if ($(_this).hasClass("scroll-button-right")) {
+          $('.vertical-rl').scrollLeft(left + velocity);
+        }
+      }, interval);
+      $(this).on("mouseout", function(e) { clearInterval(intervalId); });
+
+      e.stopPropagation();
+    });
   </script>
 
   <script src="js/main.js"></script>
