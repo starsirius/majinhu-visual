@@ -14,7 +14,7 @@
     margin-top: 0;
   }
 
-  .nav-artworks-filter {
+  .nav-artworks-filter-container {
     margin-bottom: 50px;
   }
 
@@ -91,6 +91,15 @@
 }
 
 // BlackInkGallery styles
+
+.black-ink-gallery {
+  img { .opacity(0); }
+  .big-figure {
+    .opacity(0);
+    .transition(opacity 0.5s ease-in-out);
+  }
+}
+
 .black-ink-gallery.vertical {
   .big-figure-column {
     display: inline-block;

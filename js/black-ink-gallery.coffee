@@ -65,7 +65,7 @@
 
     @$el.addClass("black-ink-gallery vertical").html $inner.append $columns
 
-  BlackInkGallery.prototype.makeFigure = ($original, options) ->
+  BlackInkGallery.prototype.makeFigure = ($original, options={}) ->
 
     captionFirst = options.captionFirst
 
@@ -111,20 +111,15 @@
 
     for $fg in figureGroup
       $column = $('<div class="big-figure-column"></div>')
-      $figure = $('<div class="big-figure"></div>')
-      $image  = $fg.find("img").first()
-      if (caption = $image.attr("data-caption"))?
-        try
-          # if caption is a json string
-          captions = JSON.parse caption
-        catch e
-          captions = caption: caption
-        $caption = $('<figurecaption class="big-figurecaption"></figurecaption>')
-        for className, text of captions
-          $caption.append '<p class="' + className + '">' + text + '</p>'
-      $inner.append $column.append $figure.append [$caption, $fg]
+      $inner.append $column.append @makeFigure $fg, captionFirst: true
 
     $el.html $inner
+    @postCreateGallery()
+
+  BlackInkGallery.prototype.postCreateGallery = () ->
+    $figures = @$el.find('.big-figure')
+    $figures.each (index, figure) -> window.getComputedStyle(figure).opacity
+    $figures.add(@$el.find('img')).css "opacity", 1
 
   $.fn.blackInkGallery = () ->
     return @each () -> (new BlackInkGallery(@)).preprocessFigures()
