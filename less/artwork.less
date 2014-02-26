@@ -14,11 +14,22 @@
   }
 
   .header-container {
+    margin-bottom: 20px;
     h1 {
       display: inline-block;
     }
     .artwork-sharing {
       display: inline-block;
+      margin-left: 20px;
+      a[class^="icon-"] {
+        font-size: 18px;
+        line-height: 1em;
+        text-decoration: none;
+        color: @gray;
+        &:hover {
+          color: @gray-dark;
+        }
+      }
     }
   }
 
@@ -44,7 +55,7 @@
   }
 
   .artwork-meta {
-    margin-top: 21px;
+    margin-top: 12px;
     > li {
       padding: 8px 0;
       border-bottom: 1px dotted @gray-light;
@@ -56,6 +67,6 @@
   }
 
   .artwork-details-section {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
 }
