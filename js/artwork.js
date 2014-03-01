@@ -16,7 +16,7 @@
         .addClass('artwork-content-container-bottom')
         .removeClass('artwork-content-container-right');
       $('.header-container-right')
-        .addClass('header-container')
+        .addClass('header-container-top')
         .removeClass('header-container-right');
     }
   }
